@@ -1,4 +1,4 @@
-# MediReach - AI-Powered Healthcare Platform
+# MediReach - AI-Powered Healthcare Platform https://medi-reach-self.vercel.app/ **(in localhost it works perfectly but deployed it brings failed to fetch error tried debugging but time...)**
 
 A comprehensive healthcare management system with intelligent AI-powered features designed to enhance patient experience, optimize doctor workflows, and enable data-driven medical insights.
 
