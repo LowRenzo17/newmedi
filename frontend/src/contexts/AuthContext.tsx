@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { api } from '../lib/api';
 
+
 interface User {
   id: string;
   email: string;
@@ -23,6 +24,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => void;
   isAuthenticated: boolean;
+  backendurl: string; // added to the context type
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -31,10 +33,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  // read VITE_API_URL safely and ensure it's a string (Vite injects VITE_* at build time)
+  const backendurl = (import.meta.env.VITE_API_URL ?? '') as string;
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
+
     
     if (token && storedUser) {
       setUser(JSON.parse(storedUser));
@@ -43,6 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     
     setLoading(false);
   }, []);
+
 
   const signUp = async (email: string, password: string, fullName: string, role: string) => {
     try {
@@ -99,6 +105,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signIn,
         signOut,
         isAuthenticated: !!user,
+        backendurl
+
+
       }}
     >
       {children}
