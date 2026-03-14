@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { Video, VideoOff, Mic, MicOff, Phone, MessageSquare } from 'lucide-react';
 
 interface VideoConsultationProps {
-  appointmentId: string;
-  roomId: string;
   isDoctor: boolean;
   patientName?: string;
   doctorName?: string;
@@ -11,8 +9,6 @@ interface VideoConsultationProps {
 }
 
 export default function VideoConsultation({
-  appointmentId,
-  roomId,
   isDoctor,
   patientName,
   doctorName,

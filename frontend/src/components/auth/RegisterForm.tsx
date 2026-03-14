@@ -53,10 +53,10 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
 
   return (
     <div className="w-full max-w-md">
-      <div className="bg-white rounded-2xl shadow-xl p-8">
+      <div className="glass-panel p-8">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">Create Account</h2>
-          <p className="text-gray-600 mt-2">Join MediReach today</p>
+          <h2 className="text-4xl font-extrabold gradient-text drop-shadow-sm pb-1">Create Account</h2>
+          <p className="text-gray-700 font-medium mt-2">Join MediReach today</p>
         </div>
 
         {error && (
@@ -75,17 +75,17 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
               <button
                 type="button"
                 onClick={() => setFormData({ ...formData, role: 'patient' })}
-                className={`p-4 border-2 rounded-lg transition ${
+                className={`p-4 border-2 rounded-xl transition ${
                   formData.role === 'patient'
-                    ? 'border-teal-600 bg-teal-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-teal-500 bg-teal-50/80 shadow-inner'
+                    : 'border-gray-200/60 bg-white/40 hover:border-gray-300'
                 }`}
               >
                 <Heart className={`w-6 h-6 mx-auto mb-2 ${
                   formData.role === 'patient' ? 'text-teal-600' : 'text-gray-400'
                 }`} />
-                <span className={`text-sm font-medium ${
-                  formData.role === 'patient' ? 'text-teal-600' : 'text-gray-600'
+                <span className={`text-sm font-semibold ${
+                  formData.role === 'patient' ? 'text-teal-700' : 'text-gray-600'
                 }`}>
                   Patient
                 </span>
@@ -93,10 +93,10 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
               <button
                 type="button"
                 onClick={() => setFormData({ ...formData, role: 'doctor' })}
-                className={`p-4 border-2 rounded-lg transition ${
+                className={`p-4 border-2 rounded-xl transition ${
                   formData.role === 'doctor'
-                    ? 'border-teal-600 bg-teal-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-teal-500 bg-teal-50/80 shadow-inner'
+                    : 'border-gray-200/60 bg-white/40 hover:border-gray-300'
                 }`}
               >
                 <Stethoscope className={`w-6 h-6 mx-auto mb-2 ${
@@ -123,7 +123,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
                 required
                 value={formData.fullName}
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
+                className="w-full pl-11 pr-4 py-3 border border-gray-300/50 bg-white/50 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition backdrop-blur-sm"
                 placeholder="John Doe"
               />
             </div>
@@ -141,7 +141,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
+                className="w-full pl-11 pr-4 py-3 border border-gray-300/50 bg-white/50 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition backdrop-blur-sm"
                 placeholder="you@example.com"
               />
             </div>
@@ -159,7 +159,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
                 required
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
+                className="w-full pl-11 pr-4 py-3 border border-gray-300/50 bg-white/50 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition backdrop-blur-sm"
                 placeholder="••••••••"
               />
             </div>
@@ -177,7 +177,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
                 required
                 value={formData.confirmPassword}
                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
+                className="w-full pl-11 pr-4 py-3 border border-gray-300/50 bg-white/50 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition backdrop-blur-sm"
                 placeholder="••••••••"
               />
             </div>
@@ -186,7 +186,7 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-semibold py-3.5 rounded-xl shadow-lg transform transition hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             {loading ? 'Creating account...' : 'Sign Up'}
           </button>

@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
+import http from 'http';
+import { initSocket } from './socket.js';
 
 import authRoutes from './routes/auth.js';
 import doctorRoutes from './routes/doctors.js';
@@ -12,6 +14,7 @@ import notificationRoutes from './routes/notifications.js';
 dotenv.config();
 
 const app = express();
+const httpServer = http.createServer(app);
 
 // Read allowed origins from .env (comma-separated). Normalize and log for debugging.
 const rawAllowed = (process.env.ALLOWED_ORIGINS || '')
@@ -28,6 +31,9 @@ if (allowedOrigins.length === 0) {
 }
 
 console.log('Configured ALLOWED_ORIGINS:', allowedOrigins);
+
+// Initialize Socket.io
+initSocket(httpServer, allowedOrigins);
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -94,7 +100,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
   .then(() => {
     console.log('Connected to MongoDB');
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
   })

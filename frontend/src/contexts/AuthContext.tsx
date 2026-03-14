@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { api } from '../lib/api';
-
-
+import { connectSocket, disconnectSocket } from '../lib/socket';
 interface User {
   id: string;
   email: string;
@@ -44,6 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (token && storedUser) {
       setUser(JSON.parse(storedUser));
       setProfile(JSON.parse(storedUser));
+      connectSocket(token);
     }
     
     setLoading(false);
@@ -63,6 +63,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(response.user);
       setProfile(response.user);
       
+      connectSocket(response.token);
+
       return { error: null };
     } catch (error) {
       return { error };
@@ -82,6 +84,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(response.user);
       setProfile(response.user);
       
+      connectSocket(response.token);
+
       return { error: null };
     } catch (error) {
       return { error };
@@ -93,6 +97,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem('user');
     setUser(null);
     setProfile(null);
+    
+    disconnectSocket();
   };
 
   return (

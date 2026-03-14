@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
-import LoginForm from './components/auth/LoginForm';
-import RegisterForm from './components/auth/RegisterForm';
 import Header from './components/layout/Header';
-import PatientDashboard from './components/patient/PatientDashboard';
-import DoctorDashboard from './components/doctor/DoctorDashboard';
-import AdminDashboard from './components/admin/AdminDashboard';
 import NotificationPanel from './components/notifications/NotificationPanel';
 import { Bell } from 'lucide-react';
+
+// Lazy loading heavy components
+const LoginForm = lazy(() => import('./components/auth/LoginForm'));
+const RegisterForm = lazy(() => import('./components/auth/RegisterForm'));
+const PatientDashboard = lazy(() => import('./components/patient/PatientDashboard'));
+const DoctorDashboard = lazy(() => import('./components/doctor/DoctorDashboard'));
+const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard'));
 
 function AppContent() {
   const { user, profile, loading } = useAuth();
@@ -17,12 +19,12 @@ function AppContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-teal-50 via-blue-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 animate-pulse">
-            <span className="text-white font-bold text-3xl">M</span>
+      <div className="min-h-screen animated-gradient-bg flex items-center justify-center">
+        <div className="text-center glass-panel p-10">
+          <div className="w-16 h-16 bg-white rounded-xl flex items-center justify-center mx-auto mb-4 animate-pulse shadow-lg">
+            <span className="text-teal-600 font-bold text-3xl">M</span>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 font-medium">Loading MediReach...</p>
+          <p className="text-gray-800 font-medium text-lg">Loading MediReach...</p>
         </div>
       </div>
     );
@@ -30,20 +32,28 @@ function AppContent() {
 
   if (!user || !profile) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-teal-50 via-blue-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen animated-gradient-bg flex flex-col items-center justify-center p-4">
         <div className="mb-8 text-center">
-          <div className="w-20 h-20 bg-gradient-to-br from-teal-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <span className="text-white font-bold text-4xl">M</span>
+          <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl transform transition hover:scale-105 duration-300">
+            <span className="text-teal-600 font-bold text-4xl">M</span>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">MediReach</h1>
-          <p className="text-gray-600 dark:text-gray-300 text-lg">Remote Medical Care Platform</p>
+          <h1 className="text-5xl font-extrabold text-white mb-2 drop-shadow-md">MediReach</h1>
+          <p className="text-white/90 text-xl font-medium drop-shadow-sm">Remote Medical Care Platform</p>
         </div>
 
-        {authMode === 'login' ? (
-          <LoginForm onSwitchToRegister={() => setAuthMode('register')} />
-        ) : (
-          <RegisterForm onSwitchToLogin={() => setAuthMode('login')} />
-        )}
+      <Suspense fallback={
+        <div className="flex justify-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+        </div>
+      }>
+        <div className="w-full max-w-md">
+          {authMode === 'login' ? (
+            <LoginForm onSwitchToRegister={() => setAuthMode('register')} />
+          ) : (
+            <RegisterForm onSwitchToLogin={() => setAuthMode('login')} />
+          )}
+        </div>
+      </Suspense>
       </div>
     );
   }
@@ -80,7 +90,13 @@ function AppContent() {
       </button>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {renderDashboard()}
+        <Suspense fallback={
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+          </div>
+        }>
+          {renderDashboard()}
+        </Suspense>
       </main>
 
       <NotificationPanel

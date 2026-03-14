@@ -2,6 +2,7 @@ import express from 'express';
 import Appointment from '../models/Appointment.js';
 import Notification from '../models/Notification.js';
 import { authMiddleware } from '../middleware/auth.js';
+import { emitToUser } from '../socket.js';
 
 const router = express.Router();
 
@@ -45,13 +46,16 @@ router.post('/', authMiddleware, async (req, res) => {
 
     await appointment.save();
 
-    await Notification.create({
+    const savedNotification = await Notification.create({
       user_id: doctor_id,
       title: 'New Appointment',
       message: `New appointment request received`,
       type: 'appointment',
       related_id: appointment._id,
     });
+
+    // Emitting real-time notification
+    emitToUser(doctor_id, 'new_notification', savedNotification);
 
     res.status(201).json(appointment);
   } catch (error) {

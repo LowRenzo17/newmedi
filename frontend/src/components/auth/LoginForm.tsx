@@ -33,10 +33,10 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
 
   return (
     <div className="w-full max-w-md">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+      <div className="glass-panel p-8">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome Back</h2>
-          <p className="text-gray-600 dark:text-gray-300 mt-2">Sign in to access your account</p>
+          <h2 className="text-4xl font-extrabold gradient-text drop-shadow-sm pb-1">Welcome Back</h2>
+          <p className="text-gray-700 font-medium dark:text-gray-300 mt-2">Sign in to access your account</p>
         </div>
 
         {error && (
@@ -77,7 +77,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full pl-11 pr-4 py-3 border border-gray-300/50 bg-white/50 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition text-gray-900 dark:text-white backdrop-blur-sm"
                 placeholder="••••••••"
               />
             </div>
@@ -86,7 +86,7 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 text-white font-semibold py-3.5 rounded-xl shadow-lg transform transition hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>

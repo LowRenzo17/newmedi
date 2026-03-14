@@ -41,9 +41,21 @@ export default function NotificationPanel({ isOpen, onClose }: NotificationPanel
   };
 
   const subscribeToNotifications = () => {
-  // realtime subscription was previously handled by a third-party client; if you need realtime with the REST API
-  // consider adding websockets or server-sent events. For now, no-op subscription.
-  return () => {};
+    const token = localStorage.getItem('token');
+    if (!token) return () => {};
+
+    const { connectSocket } = require('../../lib/socket');
+    const socket = connectSocket(token);
+
+    const handleNewNotification = (newNotification: Notification) => {
+      setNotifications((prev) => [newNotification, ...prev]);
+    };
+
+    socket.on('new_notification', handleNewNotification);
+
+    return () => {
+      socket.off('new_notification', handleNewNotification);
+    };
   };
 
   const markAsRead = async (notificationId: string) => {
