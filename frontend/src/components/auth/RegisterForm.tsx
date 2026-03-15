@@ -27,8 +27,15 @@ export default function RegisterForm({ onSwitchToLogin }: RegisterFormProps) {
       return;
     }
 
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters');
+    const emailLower = formData.email.toLowerCase();
+    if (!emailLower.endsWith('.com') && !emailLower.endsWith('.net')) {
+      setError('Email must end with .com or .net');
+      return;
+    }
+
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordPattern.test(formData.password)) {
+      setError('Password must be at least 8 characters, contain an uppercase letter, lowercase letter, a number, and a special character.');
       return;
     }
 

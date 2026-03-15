@@ -30,11 +30,11 @@ A comprehensive healthcare management system with intelligent AI-powered feature
 ## 🏗️ Architecture
 
 ### Technology Stack
-- **Frontend**: React + TypeScript + Tailwind CSS
+- **Frontend**: React 18 + TypeScript + Vite (Optimized with Route-Based Code Splitting via `React.lazy`)
+- **Styling**: Tailwind CSS + Custom Vanilla CSS (Premium Glassmorphism & Animated Gradients)
 - **Backend**: Express + Node.js with MongoDB (Mongoose) — primary application server and API
-- **AI/ML**: OpenAI API integration for NLP and predictive algorithms (invoked from backend routes)
-- **Real-time**: Backend-driven realtime via WebSockets or Server-Sent Events (SSE); the app currently uses backend-based notifications
-- **Authentication**: Backend JWTs and server-side session management (or third-party providers if integrated)
+- **Real-time**: True bi-directional WebSockets powered by `Socket.io` with JWT authentication
+- **Authentication**: JWTs, Bcrypt, and server-side session management
 - **Database**: MongoDB (Mongoose) — primary application database used by the backend
 
 ### Key Components
@@ -178,9 +178,9 @@ The AI system continuously improves with real-world data:
 
 ## 🔄 Real-Time Features
 
+- **Socket.io Integration**: Persistent WebSocket connections between React and Express
+- **Live Notifications**: Instant push events for targeted users when appointments are booked/modified
 - Live appointment status updates
-- Real-time notification delivery
-- Instant chatbot responses
 - Dynamic schedule synchronization
 
 ## 📈 Analytics & Insights

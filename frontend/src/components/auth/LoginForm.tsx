@@ -16,6 +16,19 @@ export default function LoginForm({ onSwitchToRegister }: LoginFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    const emailLower = email.toLowerCase();
+    if (!emailLower.endsWith('.com') && !emailLower.endsWith('.net')) {
+      setError('Email must end with .com or .net');
+      return;
+    }
+
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordPattern.test(password)) {
+      setError('Password must be at least 8 characters, contain an uppercase letter, lowercase letter, a number, and a special character.');
+      return;
+    }
+
     setLoading(true);
 
     const { error } = await signIn(email, password);

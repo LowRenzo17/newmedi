@@ -88,7 +88,7 @@ export default function PatientDashboard() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Welcome back, {profile?.full_name}</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Welcome back, {profile?.full_name}</h2>
           <p className="text-gray-600 mt-1">Manage your appointments and health records</p>
         </div>
         <button

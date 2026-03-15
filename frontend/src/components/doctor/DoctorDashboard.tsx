@@ -135,7 +135,7 @@ export default function DoctorDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-gray-900">Welcome, Dr. {profile?.full_name}</h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Welcome, Dr. {profile?.full_name}</h2>
         <p className="text-gray-600 mt-1">Manage your appointments and patient consultations</p>
       </div>
 
